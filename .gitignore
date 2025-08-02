@@ -1,0 +1,8 @@
+# Dependency directories
+node_modules/
+/dist
+/build
+/out
+packages/
+**/node_modules/
+**/dist/
