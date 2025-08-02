@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    "paths": {
+      // 映射组件库的包名到实际路径（关键配置）
+      "@lnl-soulmate/lnl-soulmate-comps/*": ["../lnl-soulmate-comps/"],
+      // 可选：映射组件库的根路径（如果组件库有index导出）
+      //"@lnl-soulmate/lnl-soulmate-comps": ["'../lnl-soulmate-comps/dist"]
+    }
+  },
+  "include": ["src"],
+
+}
