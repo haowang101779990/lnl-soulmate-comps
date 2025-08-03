@@ -8,6 +8,7 @@ from langchain_core.messages import BaseMessage
 class RouteDecision(BaseModel):
     route: Literal["rag", "answer", "end"]
     reply: str  = Field('', description="Filled only when route == 'end'")
+    targetTime:str=Field('', description="the time user queried of")
 
 
 

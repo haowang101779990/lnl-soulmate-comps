@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Literal
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from shared import AgentState, router_llm, judge_llm, answer_llm, RouteDecision, RagJudge
@@ -7,10 +8,14 @@ from tools import rag_search_tool, web_search_tool
 def router_node(state: AgentState) -> AgentState:
     # Use full message history with a system prompt
     system_prompt = (
-        f"[return Results in json ${RouteDecision.model_json_schema()}] You are a router that decides how to handle user queries:\n"
+        f"[return Results in json ${RouteDecision.model_json_schema()}]\n"
+        f"Based on time: {datetime.now().strftime('%Y-%m-%d')} to infer user queried target time range\n"
+        "You are a router that decides how to handle user queries:\n"
         "- Use 'end' for pure greetings/small-talk (also provide a 'reply') and answer that is already in the current conversation chat history\n"
         "- Use 'rag' when the query is related to medical research\n"
-        "- Use 'answer' when you can answer directly"
+        "- Use 'answer' when you can answer directl\n"
+        "- Use 'aboutme' when user is asking your identity\n"
+        f"- Use 'web_search' when the user is asking something real-time, like news, weather, venues, events. "   
     )
     messages = [SystemMessage(content=system_prompt)] + state["messages"]
     result: RouteDecision = router_llm.invoke(messages)
@@ -78,4 +83,11 @@ Provide a helpful, accurate, and concise response based on the available informa
     return {
         **state,
         "messages": state["messages"] + [AIMessage(content=ans)]
+    }
+    
+    
+def aboutme_node(state: AgentState) -> AgentState:
+    return {
+        **state,
+        "messages": [AIMessage(content="我是兰纳罗，一只只存在于虚幻的小精灵。")]
     }

@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic_models import QueryInput, QueryResponse, DocumentInfo, DeleteFileRequest
 from db_utils import clear_chat_history, insert_chat_history, get_chat_history, get_all_documents, insert_document_record, delete_document_record
 from chroma_utils import index_document_to_chroma, delete_doc_from_chroma
@@ -13,6 +15,8 @@ from langchain_utils import contextualise_chain
 logging.basicConfig(filename='app.log', level=logging.INFO)
 app = FastAPI()
 
+webpagedir=os.path.abspath("../../packages/lnl-soulmate-apps/dist")
+print(webpagedir)
 # Load environment variables from .env file
 load_dotenv(override=True)
 

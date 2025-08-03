@@ -16,6 +16,7 @@ def web_search_tool(query: str) -> str:
         result = tavily.invoke({"query": query})
 
         # Extract and format the results from Tavily response
+        print('call tavily search')
         if isinstance(result, dict) and 'results' in result:
             formatted_results = []
             for item in result['results']:
