@@ -1,9 +1,10 @@
 
 import {AgentStatus, LnlAgent} from '@lnl-soulmate/lnl-soulmate-comps'
+import { Chatbot } from './components/Chatbot'
 
 function App() {
   return <>
-        <LnlAgent text={"hello to you my pal!!"} showSpeed={500} status={AgentStatus.NORMAL}></LnlAgent>
+        <Chatbot></Chatbot>
   </>
 }
 

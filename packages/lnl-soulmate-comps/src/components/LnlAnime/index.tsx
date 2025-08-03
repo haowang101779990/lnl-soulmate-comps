@@ -43,7 +43,7 @@ const LnlAnime: React.FC<LnlAnimeProps> = ({width,height,scale,status}:LnlAnimeP
   }, []);
 
   useEffect(() => {
-    if (spineAsset) {
+    if (spineAsset&&status) {
       const spineboy = Spine.from({
         skeleton: "spineboyData",
         atlas: "spineboyAtlas",
@@ -52,7 +52,7 @@ const LnlAnime: React.FC<LnlAnimeProps> = ({width,height,scale,status}:LnlAnimeP
       spineBoyRef.current = spineboy;
 
       spineboy.state.data.defaultMix = 0.2;
-
+      appRef.current.stage.removeChild(spineboy)
       spineboy.state.setAnimation(0, status, true);
       spineboy.x = width;
       spineboy.y = height / 2 + spineboy.getBounds().height/2-30;
@@ -60,6 +60,11 @@ const LnlAnime: React.FC<LnlAnimeProps> = ({width,height,scale,status}:LnlAnimeP
       appRef.current.stage.addChild(spineboy);
     }
   }, [spineAsset]);
+  useEffect(()=>{
+    if(spineBoyRef.current){
+      spineBoyRef.current.state.setAnimation(0, status, true);
+    }
+  },[status])
   return <div className="anime"><canvas ref={canvasRef}></canvas></div>;
 };
 

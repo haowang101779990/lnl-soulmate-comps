@@ -1,4 +1,3 @@
-export { default as Page } from "./components/Page";
 export { default as LnlBubble } from "./components/LnlBubble";
 export { default as LnlAgent} from "./components/LnlAgent";
 export { default as LnlAnime} from "./components/LnlAnime";
@@ -9,3 +8,5 @@ export enum AgentStatus{
     THINK  = 'click_happy',
     IDLE ='click_rose'
 }
+
+export { Role } from "./components/LnlBubble/types";

@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "pnpm run build:lib && pnpm run build:app",
     "build:lib": "cd packages/lnl-soulmate-comps && pnpm run build",
-    "build:app": "cd packages/lnl-soulmate-app && pnpm run build"
+    "build:app": "cd packages/lnl-soulmate-apps && pnpm run build"
   },
   "keywords": [],
   "author": "",
