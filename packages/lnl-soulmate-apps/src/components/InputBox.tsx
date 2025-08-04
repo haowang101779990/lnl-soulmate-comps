@@ -10,17 +10,20 @@ export const InputBox = function ({promptCallback}:any){
 
    function textareaChange(){
       setPrompt(textareaRef.current.value)
-     
    }
 
    function emitPrompt(){
-       promptCallback(prompt)
+      if(!prompt){
+        return
+      }
+      promptCallback(prompt)
+      textareaRef.current.value=''
    }
 
    return <>
    <TextInputContainer>
            <textarea className="form__field" ref={textareaRef} onChange={textareaChange}/>
-            <button onClick={emitPrompt} className="btn btn--primary btn--inside uppercase">Ask Lanaruo.....</button>
+            <button onClick={emitPrompt} className="btn btn--primary btn--inside uppercase">问问它？</button>
     </TextInputContainer>
    
    </>
