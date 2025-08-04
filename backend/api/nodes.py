@@ -9,7 +9,7 @@ def router_node(state: AgentState) -> AgentState:
     # Use full message history with a system prompt
     system_prompt = (
         f"[return Results in json ${RouteDecision.model_json_schema()}]\n"
-        f"Based on time: {datetime.now().strftime('%Y-%m-%d')} to infer user queried target time range\n"
+        f"!!very important!!: Based on current time: {datetime.now().strftime('%Y-%m-%d')} to infer user queried target time range\n"
         "You are a router that decides how to handle user queries:\n"
         "- Use 'end' for pure greetings/small-talk (also provide a 'reply') and answer that is already in the current conversation chat history\n"
         "- Use 'rag' when the query is related to medical research\n"
@@ -19,8 +19,9 @@ def router_node(state: AgentState) -> AgentState:
     )
     messages = [SystemMessage(content=system_prompt)] + state["messages"]
     result: RouteDecision = router_llm.invoke(messages)
-
-    out = {"messages": state["messages"], "route": result["route"]}
+    if result.get('targetTime') is None:
+        result['targetTime']=''
+    out = {"messages": state["messages"], "route": result["route"],"targetTime":result["targetTime"]}
     if result["route"] == "end":
         out["messages"] = state["messages"] + [AIMessage(content=result["reply"] or "Hello!")]
     return out
@@ -53,7 +54,9 @@ def rag_node(state: AgentState) -> AgentState:
 def web_node(state: AgentState) -> AgentState:
     query = next((m.content for m in reversed(state["messages"])
                   if isinstance(m, HumanMessage)), "")
-    snippets = web_search_tool.invoke({"query": query})
+    print(query+f" time: {state['targetTime']}")
+    snippets = web_search_tool.invoke({"query": query+f" time: {state['targetTime']}"})
+    
     return {**state, "web": snippets, "route": "answer"}
 
 # ── Node 4: final answer ─────────────────────────────────────────────

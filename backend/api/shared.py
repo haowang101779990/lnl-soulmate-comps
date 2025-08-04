@@ -34,3 +34,4 @@ class AgentState(TypedDict, total=False):
     route:    Literal["rag", "answer", "end"]
     rag:      str
     web:      str 
+    targetTime: str

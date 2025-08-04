@@ -3,7 +3,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { ChatBotCtn } from "./style";
 import { InputBox } from "./InputBox";
 
-function useFetchAnswer(prompt:string, answerHistory:React.RefObject<string[]>, setLnlStatus:any,bottomRef:any){
+function useFetchAnswer(prompt:any, answerHistory:React.RefObject<string[]>, setLnlStatus:any,bottomRef:any){
     const [answer, setAnswer]=useState('')
     const [loading,setLoading]=useState(false)
     useEffect(()=>{
@@ -15,7 +15,7 @@ function useFetchAnswer(prompt:string, answerHistory:React.RefObject<string[]>, 
        setLnlStatus(loading?AgentStatus.THINK:AgentStatus.NORMAL)
     },[loading])
     useEffect(()=>{
-        if(prompt){
+        if(prompt?.prompt){
             bottomRef.current.scrollIntoView()
 
             setLoading(true)
@@ -25,7 +25,7 @@ function useFetchAnswer(prompt:string, answerHistory:React.RefObject<string[]>, 
                     'Content-Type':'application/json'
                 },
                 body:JSON.stringify({
-                    question: prompt,
+                    question: prompt.prompt,
                     session_id: "s1",
                     model: "qwen-plus"
                 })
@@ -43,7 +43,7 @@ function useFetchAnswer(prompt:string, answerHistory:React.RefObject<string[]>, 
 
 
 export function Chatbot(){
-  const [prompt,setPrompt]=useState('')
+  const [prompt,setPrompt]=useState({})
   const [lnlStatus,setLnlStatus]=useState(AgentStatus.NORMAL)
   const inputBoxRef =useRef(null)
   const bottomRef = useRef<HTMLDivElement>(null as any)
@@ -51,8 +51,8 @@ export function Chatbot(){
   const promptHistory = useRef([] as string[])
   const answerHistory = useRef([] as string[])
   function promptCallback(prompt:string){
+    setPrompt({prompt})
     promptHistory.current.push(prompt)
-    setPrompt(prompt)
     bottomRef.current.scrollIntoView()
   }
   const {loading,answer} = useFetchAnswer(prompt, answerHistory, setLnlStatus, bottomRef)
