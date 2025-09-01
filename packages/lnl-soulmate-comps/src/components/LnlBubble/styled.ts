@@ -4,7 +4,7 @@ export const coloredBorder = css<{ $ai?: boolean; }>`
   &::before {
 
     --color1:${props=>props.$ai?"rgba(198, 245, 144, 1) 12%":"rgba(238, 174, 202, 1) 0%"};
-    --color2:${props=>props.$ai?"rgba(218, 252, 69, 1) 100%;":"rgba(148, 187, 233, 1) 100%"};
+    --color2:${props=>props.$ai?"rgba(237, 221, 83, 1) 100%":"rgba(148, 187, 233, 1) 100%"};
     content: "";
     position: absolute;
     inset: 0;
@@ -26,6 +26,8 @@ export const coloredBorder = css<{ $ai?: boolean; }>`
     --color: white;
     --size-dot: 8px;
     width:fit-content;
+    max-height:inherit;
+    overflow:auto;
     &.user{
       align-self:flex-end;
     }

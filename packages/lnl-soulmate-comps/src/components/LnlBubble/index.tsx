@@ -14,7 +14,7 @@ const InputWrapper = styled.div<{ $ai?: boolean; }>`
   font-family: 'Anonymous Pro', monospace;
   & .css-typing{  
     width:fit-content;
-    overflow:auto;
+    overflow:hidden;
     max-height:30vh;
     position:relative;
     line-height:1.2em;
